@@ -11,7 +11,6 @@ pub struct SpinLock<T> {
 unsafe impl<T> Sync for SpinLock<T> where T: Send {}
 
 impl<T> SpinLock<T> {
-
     pub const fn new(value: T) -> Self {
         Self {
             locked: AtomicBool::new(false),
