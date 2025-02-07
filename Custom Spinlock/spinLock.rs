@@ -35,7 +35,7 @@ impl<T> Deref for Guard<'_, T> {
     type Target = T;
     fn deref(&self) -> &T {
         unsafe { &*self.lock.value.get() }
-    } // deallocation of Guard from memory also happens here
+    }
 }
 
 impl<T> DerefMut for Guard<'_, T> {
@@ -53,6 +53,6 @@ unsafe impl<T> Sync for Guard<'_, T> where T: Sync {}
 impl<T> Drop for Guard<'_, T> {
     fn drop(&mut self) {
         self.lock.locked.store(false, Release);
-    }
+    } // deallocation of Guard from memory also happens here
 }
 
